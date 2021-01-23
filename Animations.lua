@@ -2,14 +2,17 @@ wait(3) -- For everything to load in :) --
 -- Services --
 local UserInputService = game:GetService("UserInputService")
 local ContextActionService = game:GetService("ContextActionService")
+local player = game.Players.LocalPlayer
+local Humanoid = game:GetService("Players").LocalPlayer.Character.Humanoid
+local mouse = player:GetMouse()
 -- Pre/Variables --
+--Values
 local status = script.Equiped1.Value
 local rstatus = script.reloading.Value
-local player = game.Players.LocalPlayer
-local mouse = player:GetMouse()
+-- Gun Parts -- 
 local tool = script.Parent.Parent
 local mag = tool.mag
-local Humanoid = game:GetService("Players").LocalPlayer.Character.Humanoid
+-- Animation loads -- 
 local IdleAni = Humanoid:LoadAnimation(script:WaitForChild("R6Idle"))
 local CrouchAni = Humanoid:LoadAnimation(script:WaitForChild("R6Crouch"))
 local RunAni = Humanoid:LoadAnimation(script:WaitForChild("R6Run"))
@@ -39,9 +42,7 @@ function Reload(Inputkey2,gameEvent2)
 		mag2.CanCollide = true
 		mag.Transparency = 1
 		mag2.Parent = game.Workspace
-		wait(0.5)
-		mag.Transparency = 0
-		wait(2)
+		wait(1)
 		rstatus = false
 		wait(1)
 		mag2:Destroy()
