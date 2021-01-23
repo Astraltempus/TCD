@@ -4,14 +4,17 @@ local UserInputService = game:GetService("UserInputService")
 local ContextActionService = game:GetService("ContextActionService")
 -- Pre/Variables --
 local status = script.Equiped1.Value
+local rstatus = script.reloading.Value
 local player = game.Players.LocalPlayer
 local mouse = player:GetMouse()
 local tool = script.Parent.Parent
+local mag = tool.mag
 local Humanoid = game:GetService("Players").LocalPlayer.Character.Humanoid
 local IdleAni = Humanoid:LoadAnimation(script:WaitForChild("R6Idle"))
 local CrouchAni = Humanoid:LoadAnimation(script:WaitForChild("R6Crouch"))
 local RunAni = Humanoid:LoadAnimation(script:WaitForChild("R6Run"))
 local ReloadAni = Humanoid:LoadAnimation(script:WaitForChild("R6Reload"))
+local RecoilAni = Humanoid:LoadAnimation(script:WaitForChild("R6Recoil"))
 
 -- Actions --
 local function FullStop()
@@ -21,12 +24,30 @@ end
 local function Idle()
 	IdleAni:Play()
 end
+local function Shoot()
+	
+end
 -- Reload --
 function Reload(Inputkey2,gameEvent2)
-	if Inputkey2.KeyCode == Enum.KeyCode.R then
+	if Inputkey2.KeyCode == Enum.KeyCode.R and rstatus == false then
+		rstatus = true
 		RunAni:Stop()
 		IdleAni:Play()
+		ReloadAni:Play()
 		Humanoid.WalkSpeed = 16
+		local mag2 = mag:clone()
+		mag2.CanCollide = true
+		mag.Transparency = 1
+		mag2.Parent = game.Workspace
+		wait(0.5)
+		mag.Transparency = 0
+		wait(2)
+		rstatus = false
+		wait(1)
+		mag2:Destroy()
+		
+		
+		
 		
 	end
 end
@@ -80,4 +101,5 @@ end)
 ------ Finalization ------
 UserInputService.InputBegan:Connect(Crouch)
 UserInputService.InputBegan:Connect(Run)
+UserInputService.InputBegan:Connect(Reload)
 
